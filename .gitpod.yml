@@ -1,4 +1,4 @@
-image: ghcr.io/traversaro/gitpod-ubuntu-20.04:latest
+image: ghcr.io/schoolnonymous/gitpod-ubuntu-20.04:latest
 workspaceLocation: "."
 tasks:
 - command: start-vnc-session.sh
