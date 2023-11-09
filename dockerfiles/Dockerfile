@@ -1,15 +1,17 @@
 FROM ubuntu:20.04
 LABEL org.opencontainers.image.title="Traversaro's Ubuntu 20.04 blank image with VNC support"
 LABEL org.opencontainers.image.description="Infrastructure for running grasping experiments with the iCub humanoid in Gazebo"
-LABEL org.opencontainers.image.source="https://github.com/traversaro/gitpod-ubuntu-20.04"
-LABEL org.opencontainers.image.authors="Silvio Traversaro <silvio.traversaro@iit.it>"
+LABEL org.opencontainers.image.source="https://github.com/schoolnonymous/gitpod-ubuntu-20.04"
+LABEL org.opencontainers.image.author="Toasty <chipandsoup@gmail.com"
 
 # Non-interactive installation mode
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update apt database
+# Update & Upgrade and then auto remove and purge xfce and vnc and icons 
 RUN apt update
-
+RUN apt upgrade -y
+RUN apt autoremove -y
+RUN apt purge xfce4* vnc* elementary-i*
 # Install essentials
 RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
     psmisc tmux nano wget curl telnet gnupg gdb git gitk autoconf locales gdebi \
@@ -49,12 +51,12 @@ USER chipa
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
 # Set up .bashrc
-WORKDIR /home/gitpod
+WORKDIR /home/chipa
 RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source \${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc
 
 # Create the Desktop dir
-RUN mkdir -p /home/gitpod/Desktop
+
 
 # Switch back to root
 USER root
